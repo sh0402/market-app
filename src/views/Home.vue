@@ -1,18 +1,35 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+	<div>
+		<main-slide></main-slide>
+		<main-card></main-card>
+	</div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+import MainSlide from '@/views/main/slide'
+import MainCard from '@/views/main/card'
 
 export default {
-  name: "Home",
-  components: {
-    HelloWorld,
-  },
-};
+	components: { MainSlide, MainCard },
+	data() {
+		return {
+			items: [
+				{ title: 'title1' },
+				{ title: 'title2' },
+				{ title: 'title3' },
+				{ title: 'title4' },
+				{ title: 'title5' },
+				{ title: 'title6' },
+				{ title: 'title7' },
+				{ title: 'title8' }
+			],
+			cards: [
+				{ price: '2000' },
+				{ price: '4000' },
+				{ price: '1000' },
+				{ price: '6000' }
+			]
+		}
+	}
+}
 </script>
