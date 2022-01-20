@@ -18,7 +18,7 @@
 			</v-btn>
 		</v-app-bar>
 
-		<v-navigation-drawer v-model="drawer" app temporary>
+		<v-navigation-drawer app temporary v-model="drawer">
 			<site-menu :items="site.menu"></site-menu>
 		</v-navigation-drawer>
 
@@ -51,18 +51,20 @@ export default {
 								title: 'Home',
 								to: '/'
 							}
-						]
+						],
+						to: '/'
 					},
 					{
-						title: 'Upload',
-						icon: 'mdi-upload',
+						title: 'Product',
+						icon: 'mdi-plus-circle',
 						active: true,
 						subItems: [
 							{
-								title: 'Upload',
-								to: '/upload'
+								title: 'Product',
+								to: '/product'
 							}
-						]
+						],
+						to: '/product'
 					},
 					{
 						title: 'Test',
@@ -72,7 +74,8 @@ export default {
 								title: 'Test',
 								to: '/test'
 							}
-						]
+						],
+						to: '/test'
 					}
 				],
 				title: 'Apple Market',

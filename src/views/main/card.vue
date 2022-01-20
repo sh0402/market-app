@@ -2,7 +2,7 @@
 	<v-card flat>
 		<v-row dense>
 			<v-col cols="6" v-for="(card, i) in cards" :key="i">
-				<v-card flat :to="{ name: 'product' }">
+				<v-card flat>
 					<v-img src="https://picsum.photos/200"></v-img>
 
 					<v-card-title class="d-flex flex-column align-start font-weight-bold">

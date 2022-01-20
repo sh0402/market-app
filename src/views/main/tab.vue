@@ -5,7 +5,19 @@
 				title
 
 				<v-spacer></v-spacer>
-				<v-btn depressed dark color="orange" to="/product/form"> upload </v-btn>
+				<v-btn
+					depressed
+					dark
+					color="orange"
+					router
+					:to="{
+						name: 'product',
+						params: { userId: 'detail', name: '감자' },
+						query: { group: 'member', category: 'trial' }
+					}"
+				>
+					upload
+				</v-btn>
 			</v-card-title>
 		</v-card>
 

@@ -1,11 +1,11 @@
 export default {
-	apiKey: 'AIzaSyAEYXlBgBhvifV3GNuGXndTWRoHWeOgjWs',
-	authDomain: 'carrot-app-10505.firebaseapp.com',
+	apiKey: 'AIzaSyCFJdrhBORiPfzask95vhzyhNs6hNsQDWs',
+	authDomain: 'marketapp-e09ee.firebaseapp.com',
 	databaseURL:
-		'https://carrot-app-10505-default-rtdb.asia-southeast1.firebasedatabase.app',
-	projectId: 'carrot-app-10505',
-	storageBucket: 'carrot-app-10505.appspot.com',
-	messagingSenderId: '163521492718',
-	appId: '1:163521492718:web:ac75d70766e3c2870ba5ff',
-	measurementId: 'G-RWVFNTYD1F'
+		'https://marketapp-e09ee-default-rtdb.asia-southeast1.firebasedatabase.app',
+	projectId: 'marketapp-e09ee',
+	storageBucket: 'marketapp-e09ee.appspot.com',
+	messagingSenderId: '487534878103',
+	appId: '1:487534878103:web:bd7fa9c608ee0878b938d2',
+	measurementId: 'G-GRTV3T8C7T'
 }
