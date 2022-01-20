@@ -1,13 +1,20 @@
 <template>
-	<product-index></product-index>
+	<v-card> Product page </v-card>
 </template>
 
 <script>
-import ProductIndex from '@/components/product/index'
 export default {
-	components: { ProductIndex },
+	computed: {
+		productId() {
+			return this.$route.params.productId
+		}
+	},
 	data() {
 		return {}
+	},
+	created() {
+		console.log('router', this.$router)
+		console.log('route', this.$route)
 	}
 }
 </script>

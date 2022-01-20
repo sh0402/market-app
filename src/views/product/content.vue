@@ -4,6 +4,7 @@
 
 <script>
 import ProductForm from '@/components/product/form'
+
 export default {
 	components: { ProductForm },
 	data() {
