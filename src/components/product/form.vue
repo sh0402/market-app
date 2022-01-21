@@ -138,7 +138,7 @@
 				</v-combobox>
 			</v-card-text>
 			<v-card-text>
-				<v-btn color="primary">save</v-btn>
+				<v-btn color="primary" @click="save">save</v-btn>
 			</v-card-text>
 		</v-card>
 	</v-container>
@@ -148,30 +148,9 @@
 export default {
 	data() {
 		return {
-			model: [{ text: 'Foo', color: 'blue' }],
-			items: [
-				{
-					text: 'Foo',
-					color: 'blue'
-				},
-				{
-					text: 'Bar',
-					color: 'orange'
-				},
-				{
-					text: 'Fizz',
-					color: 'red'
-				},
-				{
-					text: 'Buzz',
-					color: 'purple'
-				},
-				{
-					text: 'FizzBuzz',
-					color: 'indigo'
-				}
-			],
-			colors: ['green', 'purple', 'indigo', 'cyan', 'teal', 'orange'],
+			model: [],
+			items: [],
+			colors: [],
 			form: {
 				title: '',
 				price: '',
@@ -226,6 +205,14 @@ export default {
 					this.imageFile = files[0]
 				})
 			}
+		},
+		save() {
+			this.$firebase
+				.firestore()
+				.collection('boards')
+				.doc(this.document)
+				.collection('products')
+				.add(this.form)
 		}
 	}
 }

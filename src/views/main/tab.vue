@@ -12,8 +12,8 @@
 					router
 					:to="{
 						name: 'product',
-						params: { userId: 'detail', name: '감자' },
-						query: { group: 'member', category: 'trial' }
+						params: { docId: 'detail', name: '감자' },
+						query: { form: 'form' }
 					}"
 				>
 					upload

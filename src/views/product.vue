@@ -1,7 +1,9 @@
 <template>
 	<v-container>
+		<product-detail v-if="!action" :docId="docId"></product-detail>
+		<product-form v-else :action="action"></product-form>
 		<v-card>
-			<v-card-title>이 페이지의 아이디는 {{ userId }}</v-card-title>
+			<v-card-title>이 페이지의 아이디는 {{ docId }}</v-card-title>
 			<v-card-title> {{ $route.params.name }} </v-card-title>
 			<v-card-title> 쿼리 그룹: {{ $route.query.group }} </v-card-title>
 			<v-card-title> 쿼리 카테고리: {{ $route.query.category }} </v-card-title>
@@ -12,10 +14,16 @@
 </template>
 
 <script>
+import ProductDetail from '@/components/product/detail'
+import ProductForm from '@/components/product/form'
 export default {
+	components: { ProductDetail, ProductForm },
 	computed: {
-		userId() {
-			return this.$route.params.userId
+		docId() {
+			return this.$route.params.docId
+		},
+		action() {
+			return this.$route.query.action
 		}
 	},
 	created() {

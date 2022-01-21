@@ -5,10 +5,6 @@
 
 			<v-spacer />
 
-			<v-btn icon @click="$router.push('/sign')">
-				<v-icon>mdi-login-variant</v-icon>
-			</v-btn>
-
 			<v-btn icon>
 				<v-icon>mdi-heart</v-icon>
 			</v-btn>
@@ -16,13 +12,17 @@
 			<v-btn icon>
 				<v-icon>mdi-dots-vertical</v-icon>
 			</v-btn>
+
+			<v-btn icon @click="$router.push('/auth')">
+				<v-icon>mdi-account</v-icon>
+			</v-btn>
 		</v-app-bar>
 
 		<v-navigation-drawer app temporary v-model="drawer">
 			<site-menu :items="site.menu"></site-menu>
 		</v-navigation-drawer>
 
-		<v-main>
+		<v-main class="d-flex justify-center align-center">
 			<router-view />
 		</v-main>
 
@@ -31,50 +31,32 @@
 </template>
 
 <script>
-import SiteFooter from '@/views/site/footer'
 import SiteMenu from '@/views/site/menu'
+import SiteFooter from '@/views/site/footer'
 
 export default {
-	components: { SiteFooter, SiteMenu },
+	components: { SiteMenu, SiteFooter },
 	name: 'App',
 
 	data() {
 		return {
+			typeCenter: false,
 			drawer: false,
 			site: {
 				menu: [
 					{
 						title: 'Home',
-						icon: 'mdi-home',
-						subItems: [
-							{
-								title: 'Home',
-								to: '/'
-							}
-						],
+
 						to: '/'
 					},
 					{
 						title: 'Product',
-						icon: 'mdi-plus-circle',
-						active: true,
-						subItems: [
-							{
-								title: 'Product',
-								to: '/product'
-							}
-						],
+
 						to: '/product'
 					},
 					{
 						title: 'Test',
-						icon: 'mdi-file-question',
-						subItems: [
-							{
-								title: 'Test',
-								to: '/test'
-							}
-						],
+
 						to: '/test'
 					}
 				],

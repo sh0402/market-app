@@ -29,5 +29,13 @@
 </template>
 
 <script>
-export default {}
+export default {
+	data() {
+		return {}
+	},
+	created() {
+		console.log('router', this.$router)
+		console.log('route', this.$route)
+	}
+}
 </script>

@@ -19,8 +19,8 @@ const routes = [
 		component: () => import('../views/Test.vue')
 	},
 	{
-		path: '/sign',
-		component: () => import('../views/sign.vue')
+		path: '/auth',
+		component: () => import('@/views/auth')
 	},
 	{
 		path: '/product',
@@ -28,9 +28,18 @@ const routes = [
 		component: () => import('../views/product.vue')
 	},
 	{
-		path: '/product/:userId',
+		path: '/product/:docId',
 		name: 'product',
 		component: () => import('../views/product.vue')
+	},
+	{
+		path: '/form',
+		component: () => import('@/components/product/form')
+	},
+	{
+		path: '/form2',
+		name: 'form2',
+		component: () => import('@/components/product/form2')
 	}
 ]
 

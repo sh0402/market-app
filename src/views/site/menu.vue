@@ -9,57 +9,59 @@
 
 		<v-divider></v-divider>
 
-		<v-list>
-			<v-list-group
-				v-model="item.active"
-				v-for="(item, i) in items"
-				:key="i"
-				:prepend-icon="item.icon"
-				no-action
-			>
-				<template v-slot:activator>
+		<v-list nav>
+			<v-list-item-group v-model="model" color="orange darken-4">
+				<v-list-item v-for="(item, i) in items" :key="i" :to="item.to">
 					<v-list-item-content>
-						<v-list-item-title v-text="item.title"></v-list-item-title>
+						<v-list-item-title class="font-weight-bold">
+							{{ item.title }}
+						</v-list-item-title>
 					</v-list-item-content>
 
 					<v-list-item-action>
-						<v-btn icon @click="openDialogItem(i)">
-							<v-icon>mdi-database-edit</v-icon>
+						<v-btn icon @click.native="openDialogItem(i)">
+							<v-icon small>mdi-database-edit</v-icon>
 						</v-btn>
 					</v-list-item-action>
-				</template>
-
-				<v-list-item
-					v-for="subItem in item.subItems"
-					:key="subItem.title"
-					:to="subItem.to"
-				>
-					<v-list-item-content>
-						<v-list-item-title v-text="subItem.title"></v-list-item-title>
-					</v-list-item-content>
+					<v-list-item-action class="mx-0">
+						<v-btn icon @click.native="removeItem(items, i)">
+							<v-icon small>mdi-close</v-icon>
+						</v-btn>
+					</v-list-item-action>
 				</v-list-item>
+			</v-list-item-group>
+		</v-list>
 
-				<v-list-item>
-					<v-list-item-icon>
-						<v-icon>mdi-plus</v-icon>
-					</v-list-item-icon>
-					ADD Page
-				</v-list-item>
-			</v-list-group>
-
-			<v-list-item @click="openDialogItem(-1)">
-				<v-list-item-icon>
-					<v-icon>mdi-plus</v-icon>
-				</v-list-item-icon>
-				ADD Menu
-			</v-list-item>
+		<v-list nav>
+			<v-btn
+				block
+				depressed
+				dark
+				color="orange"
+				@click.stop="openDialogItem(-1)"
+			>
+				<v-icon small>mdi-plus</v-icon>
+				ADD
+			</v-btn>
 		</v-list>
 
 		<v-dialog v-model="dialogItem" max-width="400">
 			<v-card>
 				<v-card-title>title</v-card-title>
 				<v-card-text>
-					<v-text-field dense outlined v-model="formItem.title"></v-text-field>
+					<v-text-field
+						dense
+						outlined
+						label="Title"
+						v-model="formItem.title"
+					></v-text-field>
+
+					<v-text-field
+						dense
+						outlined
+						label="URL"
+						v-model="formItem.to"
+					></v-text-field>
 					<v-btn @click="saveItem">Save</v-btn>
 				</v-card-text>
 			</v-card>
@@ -72,42 +74,62 @@ export default {
 	props: ['items'],
 	data() {
 		return {
-			dialogItem: false,
-			dialogSubItem: false,
+			loading: false,
+			model: 1,
 			formItem: {
 				icon: '',
-				title: ''
+				title: '',
+				to: ''
 			},
-			selectedItemIndex: -1
+			dialogItem: false,
+			dialogSubItem: false,
+			selectedItemIndex: 0,
+			selectedSubItemIndex: 0
 		}
 	},
 	methods: {
 		// eslint-disable-next-line no-unused-vars
 		openDialogItem(index) {
 			this.selectedItemIndex = index
-			this.dialogItem = true
+
 			if (index < 0) {
 				this.formItem.title = ''
+				this.formItem.to = ''
 			} else {
 				this.formItem.title = this.items[index].title
+				this.formItem.to = this.items[index].to
 			}
+			this.dialogItem = true
 		},
-		saveItem() {
+		async saveItem() {
 			if (this.selectedItemIndex < 0) {
 				// eslint-disable-next-line vue/no-mutating-props
 				this.items.push(this.formItem)
 			} else {
 				// eslint-disable-next-line vue/no-mutating-props
-				this.items[this.selectedItemIndex] = this.formItem
+				this.items[this.selectedItemIndex].titile = this.formItem.title
+				// eslint-disable-next-line vue/no-mutating-props
+				this.items[this.selectedItemIndex].to = this.formItem.to
 			}
 			this.save()
 		},
 		async save() {
 			try {
-				this.$firebase.database().ref().child('site').set({ menu: this.items })
+				this.loading = true
+				await this.$firebase
+					.database()
+					.ref()
+					.child('site')
+					.child('menu')
+					.set(this.items)
 			} finally {
 				this.dialogItem = false
+				this.loading = false
 			}
+		},
+		removeItem(items, i) {
+			items.splice(i, 1)
+			this.save()
 		}
 	}
 }
