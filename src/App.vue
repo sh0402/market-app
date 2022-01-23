@@ -9,20 +9,54 @@
 				<v-icon>mdi-heart</v-icon>
 			</v-btn>
 
-			<v-btn icon>
+			<v-btn icon to="/auth">
 				<v-icon>mdi-dots-vertical</v-icon>
 			</v-btn>
 
-			<v-btn icon @click="$router.push('/auth')">
-				<v-icon>mdi-account</v-icon>
-			</v-btn>
+			<v-menu offset-y v-if="!$store.state.fireUser">
+				<template v-slot:activator="{ on }">
+					<v-btn icon v-on="on">
+						<v-icon>mdi-account</v-icon>
+					</v-btn>
+				</template>
+
+				<v-list nav>
+					<v-list-item-group>
+						<v-list-item> Log-in </v-list-item>
+					</v-list-item-group>
+				</v-list>
+			</v-menu>
+
+			<v-menu offset-y v-else>
+				<template v-slot:activator="{ on }">
+					<v-btn icon v-on="on">
+						<v-icon>mdi-account</v-icon>
+					</v-btn>
+				</template>
+
+				<v-list nav>
+					<v-list-item>
+						<v-list-item-content>
+							<v-list-item-title> user.name </v-list-item-title>
+							<v-list-item-subtitle> subtitle </v-list-item-subtitle>
+						</v-list-item-content>
+					</v-list-item>
+
+					<v-divider></v-divider>
+
+					<v-list-item-group>
+						<v-list-item> Setting </v-list-item>
+						<v-list-item @click="signOut"> Log-Out </v-list-item>
+					</v-list-item-group>
+				</v-list>
+			</v-menu>
 		</v-app-bar>
 
 		<v-navigation-drawer app temporary v-model="drawer">
 			<site-menu :items="site.menu"></site-menu>
 		</v-navigation-drawer>
 
-		<v-main class="d-flex justify-center align-center">
+		<v-main>
 			<router-view />
 		</v-main>
 
@@ -87,6 +121,9 @@ export default {
 						console.log(e.message)
 					}
 				)
+		},
+		signOut() {
+			this.$firebase.auth().signOut()
 		}
 	}
 }
