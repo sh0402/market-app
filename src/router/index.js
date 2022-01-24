@@ -23,9 +23,9 @@ const routes = [
 		component: () => import('@/views/auth')
 	},
 	{
-		path: '/product',
-		name: 'product',
-		component: () => import('../views/product.vue')
+		path: '/board',
+		name: 'board',
+		component: () => import('../views/board')
 	},
 	{
 		path: '/form',

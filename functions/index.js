@@ -10,20 +10,20 @@ admin.initializeApp({
 
 const db = admin.database()
 
-exports.createUser = functions.auth.user().onCreate(user => {
+exports.createUser = functions.auth.user().onCreate(async user => {
 	const { uid, email, displayName, photoURL } = user
 	const u = {
 		email,
 		displayName,
 		photoURL,
-		createdAt: new Date().getMilliseconds(),
+		createdAt: new Date().getTime(),
 		level: email === functions.config().admin.email ? 0 : 5
 	}
-	db.ref('user').child(uid).set(u)
+	db.ref('users').child(uid).set(u)
 })
 
-exports.deleteUser = functions.auth.user().onDelete(user => {
+exports.deleteUser = functions.auth.user().onDelete(async user => {
 	const { uid } = user
 
-	db.ref('user').child(uid).remove()
+	db.ref('users').child(uid).remove()
 })
