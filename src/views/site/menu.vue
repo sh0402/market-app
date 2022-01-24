@@ -10,26 +10,24 @@
 		<v-divider></v-divider>
 
 		<v-list nav>
-			<v-list-item-group v-model="model" color="orange darken-4">
-				<v-list-item v-for="(item, i) in items" :key="i" :to="item.to">
-					<v-list-item-content>
-						<v-list-item-title class="font-weight-bold">
-							{{ item.title }}
-						</v-list-item-title>
-					</v-list-item-content>
+			<v-list-item v-for="(item, i) in items" :key="i" :to="item.to">
+				<v-list-item-content>
+					<v-list-item-title class="font-weight-bold">
+						{{ item.title }}
+					</v-list-item-title>
+				</v-list-item-content>
 
-					<v-list-item-action>
-						<v-btn icon @click.native="openDialogItem(i)">
-							<v-icon small>mdi-database-edit</v-icon>
-						</v-btn>
-					</v-list-item-action>
-					<v-list-item-action class="mx-0">
-						<v-btn icon @click.native="removeItem(items, i)">
-							<v-icon small>mdi-close</v-icon>
-						</v-btn>
-					</v-list-item-action>
-				</v-list-item>
-			</v-list-item-group>
+				<v-list-item-action>
+					<v-btn icon @click="openDialogItem(i)">
+						<v-icon small>mdi-database-edit</v-icon>
+					</v-btn>
+				</v-list-item-action>
+				<v-list-item-action class="mx-0">
+					<v-btn icon @click="removeItem(items, i)">
+						<v-icon small>mdi-close</v-icon>
+					</v-btn>
+				</v-list-item-action>
+			</v-list-item>
 		</v-list>
 
 		<v-list nav>
@@ -82,13 +80,25 @@ export default {
 				to: ''
 			},
 			dialogItem: false,
-			dialogSubItem: false,
-			selectedItemIndex: 0,
-			selectedSubItemIndex: 0
+			selectedItemIndex: 0
 		}
 	},
 	methods: {
-		// eslint-disable-next-line no-unused-vars
+		async save() {
+			try {
+				this.loading = true
+				await this.$firebase
+					.database()
+					.ref()
+					.child('site')
+					.child('menu')
+					.set(this.items)
+			} finally {
+				this.dialogItem = false
+				this.loading = false
+			}
+		},
+
 		openDialogItem(index) {
 			this.selectedItemIndex = index
 
@@ -107,25 +117,11 @@ export default {
 				this.items.push(this.formItem)
 			} else {
 				// eslint-disable-next-line vue/no-mutating-props
-				this.items[this.selectedItemIndex].titile = this.formItem.title
+				this.items[this.selectedItemIndex].title = this.formItem.title
 				// eslint-disable-next-line vue/no-mutating-props
 				this.items[this.selectedItemIndex].to = this.formItem.to
 			}
 			this.save()
-		},
-		async save() {
-			try {
-				this.loading = true
-				await this.$firebase
-					.database()
-					.ref()
-					.child('site')
-					.child('menu')
-					.set(this.items)
-			} finally {
-				this.dialogItem = false
-				this.loading = false
-			}
 		},
 		removeItem(items, i) {
 			items.splice(i, 1)

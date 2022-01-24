@@ -13,43 +13,7 @@
 				<v-icon>mdi-dots-vertical</v-icon>
 			</v-btn>
 
-			<v-menu offset-y v-if="!$store.state.fireUser">
-				<template v-slot:activator="{ on }">
-					<v-btn icon v-on="on">
-						<v-icon>mdi-account</v-icon>
-					</v-btn>
-				</template>
-
-				<v-list nav>
-					<v-list-item-group>
-						<v-list-item> Log-in </v-list-item>
-					</v-list-item-group>
-				</v-list>
-			</v-menu>
-
-			<v-menu offset-y v-else>
-				<template v-slot:activator="{ on }">
-					<v-btn icon v-on="on">
-						<v-icon>mdi-account</v-icon>
-					</v-btn>
-				</template>
-
-				<v-list nav>
-					<v-list-item>
-						<v-list-item-content>
-							<v-list-item-title> user.name </v-list-item-title>
-							<v-list-item-subtitle> subtitle </v-list-item-subtitle>
-						</v-list-item-content>
-					</v-list-item>
-
-					<v-divider></v-divider>
-
-					<v-list-item-group>
-						<v-list-item> Setting </v-list-item>
-						<v-list-item @click="signOut"> Log-Out </v-list-item>
-					</v-list-item-group>
-				</v-list>
-			</v-menu>
+			<site-sign></site-sign>
 		</v-app-bar>
 
 		<v-navigation-drawer app temporary v-model="drawer">
@@ -66,21 +30,20 @@
 
 <script>
 import SiteMenu from '@/views/site/menu'
+import SiteSign from '@/views/site/sign'
 import SiteFooter from '@/views/site/footer'
 
 export default {
-	components: { SiteMenu, SiteFooter },
+	components: { SiteMenu, SiteSign, SiteFooter },
 	name: 'App',
 
 	data() {
 		return {
-			typeCenter: false,
 			drawer: false,
 			site: {
 				menu: [
 					{
 						title: 'Home',
-
 						to: '/'
 					},
 					{
@@ -121,9 +84,6 @@ export default {
 						console.log(e.message)
 					}
 				)
-		},
-		signOut() {
-			this.$firebase.auth().signOut()
 		}
 	}
 }

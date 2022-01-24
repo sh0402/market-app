@@ -1,39 +1,5 @@
 <template>
 	<v-container style="max-width: 500px">
-		<!-- <v-card class="mb-4">
-			<v-card-title> Sign-Up </v-card-title>
-			<v-card-text>
-				<v-text-field
-					dense
-					outlined
-					type="text"
-					label="User_Name"
-					v-model="form.name"
-				></v-text-field>
-
-				<v-text-field
-					dense
-					outlined
-					type="email"
-					label="User_email"
-					v-model="form.email"
-				></v-text-field>
-
-				<v-text-field
-					dense
-					outlined
-					type="password"
-					label="Password"
-					hide-details=""
-					v-model="form.password"
-				></v-text-field>
-			</v-card-text>
-
-			<v-card-text>
-				<v-btn color="primary" @click="signUp"> sign-up </v-btn>
-			</v-card-text>
-		</v-card> -->
-
 		<v-card class="mb-4">
 			<v-card-title> Sign-In </v-card-title>
 			<v-card-text>

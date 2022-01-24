@@ -24,7 +24,20 @@
 					color="primary"
 					height="44"
 					class="mt-4"
+					v-if="loading"
+				>
+					<v-progress-circular indeterminate></v-progress-circular>
+				</v-btn>
+
+				<v-btn
+					block
+					rounded
+					depressed
+					color="primary"
+					height="44"
+					class="mt-4"
 					@click="signInWithGoogle"
+					v-else
 				>
 					<v-icon small class="mr-2">mdi-google</v-icon>
 					Google Log-In

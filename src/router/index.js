@@ -28,11 +28,6 @@ const routes = [
 		component: () => import('../views/product.vue')
 	},
 	{
-		path: '/product/:docId',
-		name: 'product',
-		component: () => import('../views/product.vue')
-	},
-	{
 		path: '/form',
 		component: () => import('@/components/product/form')
 	},
