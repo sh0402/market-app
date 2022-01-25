@@ -23,9 +23,14 @@ const routes = [
 		component: () => import('@/views/auth')
 	},
 	{
+		path: '/product',
+		name: 'product',
+		component: () => import('@/views/product')
+	},
+	{
 		path: '/board',
 		name: 'board',
-		component: () => import('../views/board')
+		component: () => import('@/views/board')
 	},
 	{
 		path: '/form',

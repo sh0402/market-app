@@ -1,6 +1,6 @@
 <template>
 	<v-container>
-		<v-card class="mb-6">
+		<!-- <v-card class="mb-6">
 			<v-data-table :headers="headers" :items="items">
 				<template v-slot:item.action="{ item }">
 					<v-btn icon @click="remove(item)">
@@ -11,9 +11,10 @@
 					</v-btn>
 				</template>
 			</v-data-table>
-		</v-card>
+		</v-card> -->
 
 		<v-card>
+			<v-card-title> Product Write </v-card-title>
 			<v-card-text>
 				<v-text-field
 					dense
@@ -94,7 +95,7 @@ export default {
 					})
 				})
 		},
-		seletItem(item) {
+		selectItem(item) {
 			this.selectedItem = item
 
 			this.form.title = item.title

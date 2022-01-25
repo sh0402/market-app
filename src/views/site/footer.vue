@@ -1,16 +1,71 @@
 <template>
-	<v-footer
+	<v-footer app footer color="primary" dark class="pb-6 justify-space-between">
+		<div class="d-flex flex-column align-center">
+			<v-btn depressed large color="transparent" to="/">
+				<v-icon> mdi-home </v-icon>
+			</v-btn>
+			<span class="text-caption">홈</span>
+		</div>
+
+		<div class="d-flex flex-column align-center">
+			<v-btn depressed large color="transparent">
+				<v-icon> mdi-magnify </v-icon>
+			</v-btn>
+			<span class="text-caption">검색</span>
+		</div>
+
+		<div class="d-flex flex-column align-center">
+			<v-btn depressed large color="transparent" to="/form2">
+				<v-icon> mdi-plus </v-icon>
+			</v-btn>
+			<span class="text-caption">등록</span>
+		</div>
+
+		<div class="d-flex flex-column align-center">
+			<v-btn depressed large color="transparent">
+				<v-icon> mdi-chat-processing </v-icon>
+			</v-btn>
+			<span class="text-caption">채팅</span>
+		</div>
+
+		<div class="d-flex flex-column align-center">
+			<v-btn depressed large color="transparent">
+				<v-icon> mdi-account </v-icon>
+			</v-btn>
+			<span class="text-caption">MY</span>
+		</div>
+	</v-footer>
+	<!-- <v-footer
 		color="primary"
 		dark
-		class="justify-center"
+		class="justify-center px-0 py-0"
 		:footer="footer"
-		height="44"
 	>
-		<div>&copy; {{ new Date().getFullYear() + ' ' + footer }}</div>
+		<v-card color="transparent">
+			<v-card-text class="text-center pb-0">
+				<v-btn v-for="icon in 4" :key="icon" class="mx-4 white--text" icon>
+					<v-icon size="24px"> mdi-one-up </v-icon>
+				</v-btn>
+			</v-card-text>
 
-		<v-btn icon small @click="openDialog">
-			<v-icon small> mdi-dots-vertical </v-icon>
-		</v-btn>
+			<v-card-text class="text-center">
+				Phasellus feugiat arcu sapien, et iaculis ipsum elementum sit amet.
+				Mauris cursus commodo interdum. Praesent ut risus eget metus luctus
+				accumsan id ultrices nunc. Sed at orci sed massa consectetur dignissim a
+				sit amet dui.
+			</v-card-text>
+
+			<v-divider></v-divider>
+
+			<v-card-text class="text-center">
+				&copy; {{ new Date().getFullYear() + ' ' }}
+				<strong>{{ footer }}</strong>
+
+				<v-btn icon small @click="openDialog">
+					<v-icon small> mdi-dots-vertical </v-icon>
+				</v-btn>
+			</v-card-text>
+		</v-card>
 
 		<v-dialog v-model="dialog" max-width="500">
 			<v-card>
@@ -35,7 +90,7 @@
 				</v-card-actions>
 			</v-card>
 		</v-dialog>
-	</v-footer>
+	</v-footer> -->
 </template>
 
 <script>

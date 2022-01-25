@@ -13,7 +13,7 @@
 					:to="{
 						name: 'product',
 						params: { docId: 'detail', name: '감자' },
-						query: { form: 'form' }
+						query: { form: 'form2' }
 					}"
 				>
 					upload
