@@ -7,3 +7,6 @@
 
 4. database.rules.json
 [ Ref : https://firebase.google.com/docs/database/security/rules-conditions?authuser=0#referencing_data_in_other_paths]
+
+### Delete Function
+1. firebase.json > "npm --prefix %RESOURCE_DIR% run lint"

@@ -24,8 +24,11 @@ const routes = [
 	},
 	{
 		path: '/product',
-		name: 'product',
 		component: () => import('@/views/product')
+	},
+	{
+		path: '/product/:article',
+		component: () => import('@/views/product/content')
 	},
 	{
 		path: '/board',
@@ -34,12 +37,12 @@ const routes = [
 	},
 	{
 		path: '/form',
-		component: () => import('@/components/product/form')
+		component: () => import('@/components/product1/form')
 	},
 	{
 		path: '/form2',
 		name: 'form2',
-		component: () => import('@/components/product/form2')
+		component: () => import('@/components/product1/form2')
 	}
 ]
 
