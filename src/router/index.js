@@ -10,14 +10,7 @@ const routes = [
 		name: 'Home',
 		component: Home
 	},
-	{
-		path: '/upload',
-		component: () => import('../views/Upload.vue')
-	},
-	{
-		path: '/test',
-		component: () => import('../views/Test.vue')
-	},
+
 	{
 		path: '/auth',
 		component: () => import('@/views/auth')
@@ -28,6 +21,7 @@ const routes = [
 	},
 	{
 		path: '/product/:article',
+		name: 'product-detail',
 		component: () => import('@/views/product/content')
 	},
 	{
@@ -36,13 +30,19 @@ const routes = [
 		component: () => import('@/views/board')
 	},
 	{
-		path: '/form',
-		component: () => import('@/components/product1/form')
-	},
-	{
 		path: '/form2',
 		name: 'form2',
-		component: () => import('@/components/product1/form2')
+		component: () => import('@/components/product/form2')
+	},
+	{
+		path: '/:collection/:document',
+		name: 'collection-document',
+		component: () => import('../views/renderer')
+	},
+	{
+		path: '*',
+		name: 'error',
+		component: () => import('../views/error')
 	}
 ]
 

@@ -11,7 +11,7 @@
 
 			<v-row dense>
 				<v-col cols="6" v-for="item in items" :key="item.id">
-					<v-card flat @click="$router.push({ path: '/product/detail' })">
+					<v-card flat :to="`${$route.path}/${item.id}`">
 						<v-img src="https://picsum.photos/200"></v-img>
 
 						<v-card-title class="d-flex align-center font-weight-bold">

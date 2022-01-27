@@ -1,13 +1,18 @@
 <template>
-	<product-detail></product-detail>
+	<product-detail :item="item"></product-detail>
 </template>
 
 <script>
 import ProductDetail from '@/components/product/detail'
+
 export default {
 	components: { ProductDetail },
 	data() {
-		return {}
+		return {
+			item() {
+				return this.$router.params.item
+			}
+		}
 	}
 }
 </script>

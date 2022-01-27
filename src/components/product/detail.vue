@@ -3,7 +3,7 @@
 		<v-img src="https://picsum.photos/200"></v-img>
 
 		<v-card-title>
-			000원
+			asdda{{ item.title }}
 			<v-chip small label class="ml-2">라벨</v-chip>
 		</v-card-title>
 
@@ -30,6 +30,7 @@
 
 <script>
 export default {
+	props: ['item'],
 	data() {
 		return {}
 	},
