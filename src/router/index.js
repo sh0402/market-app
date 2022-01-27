@@ -25,11 +25,6 @@ const routes = [
 		component: () => import('@/views/product/content')
 	},
 	{
-		path: '/board',
-		name: 'board',
-		component: () => import('@/views/board')
-	},
-	{
 		path: '/form2',
 		name: 'form2',
 		component: () => import('@/components/product/form2')
@@ -37,6 +32,11 @@ const routes = [
 	{
 		path: '/:collection/:document',
 		name: 'collection-document',
+		component: () => import('../views/renderer')
+	},
+	{
+		path: '/:collection/:document/:action',
+		name: 'collection-document-action',
 		component: () => import('../views/renderer')
 	},
 	{
