@@ -3,7 +3,7 @@
 		<v-form>
 			<v-card :loading="loading">
 				<v-toolbar color="accent" dense flat dark>
-					<v-toolbar-title>게시판 정보 작성</v-toolbar-title>
+					<v-toolbar-title>게시판 글 작성</v-toolbar-title>
 
 					<v-spacer />
 
@@ -56,6 +56,11 @@ export default {
 			loading: false
 		}
 	},
+	computed: {
+		articleId() {
+			return this.$route.query.articleId
+		}
+	},
 	watch: {
 		document() {
 			this.subscribe()
@@ -69,11 +74,15 @@ export default {
 	},
 	methods: {
 		subscribe() {
+			console.log(this.articleId)
+			if (this.articleId === 'new') return
 			if (this.unsubscribe) this.unsubsribe()
 			this.ref = this.$firebase
 				.firestore()
 				.collection('boards')
 				.doc(this.document)
+				.collection('articles')
+				.doc(this.articleId)
 			this.unsubscribe = this.ref.onSnapshot(doc => {
 				this.exists = doc.exists
 				if (this.exists) {
@@ -85,25 +94,25 @@ export default {
 			})
 		},
 		async save() {
-			const form = {
-				category: this.form.category,
-				title: this.form.title,
-				description: this.form.description,
-				updatedAt: new Date()
-			}
-			this.loading = true
-			try {
-				if (!this.exists) {
-					form.createdAt = new Date()
-					form.count = 0
-					await this.ref.set(form)
-				} else {
-					this.ref.update(form)
-				}
-				this.$router.push('/board/' + this.document)
-			} finally {
-				this.loading = false
-			}
+			// const form = {
+			// 	category: this.form.category,
+			// 	title: this.form.title,
+			// 	description: this.form.description,
+			// 	updatedAt: new Date()
+			// }
+			// this.loading = true
+			// try {
+			// 	if (!this.exists) {
+			// 		form.createdAt = new Date()
+			// 		form.count = 0
+			// 		await this.ref.set(form)
+			// 	} else {
+			// 		this.ref.update(form)
+			// 	}
+			// 	this.$router.push('/board/' + this.document)
+			// } finally {
+			// 	this.loading = false
+			// }
 		}
 	}
 }

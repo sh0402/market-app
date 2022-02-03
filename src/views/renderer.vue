@@ -10,10 +10,16 @@
 		></board-content>
 
 		<board-form
-			v-else-if="collection === 'board'"
+			v-else-if="collection === 'board' && action === 'board-write'"
 			:document="document"
 			:action="action"
 		></board-form>
+
+		<board-article-form
+			v-else-if="collection === 'board' && action === 'article-write'"
+			:document="document"
+			:action="action"
+		></board-article-form>
 
 		<error-page v-else></error-page>
 		<!-- 
@@ -30,16 +36,26 @@
 import BoardIndex from './board/index'
 import BoardContent from './board/content'
 import BoardForm from './board/form'
+import BoardArticleForm from './board/article/form'
 import ErrorPage from './error'
 
 export default {
-	components: { BoardIndex, BoardContent, BoardForm, ErrorPage },
+	components: {
+		BoardIndex,
+		BoardContent,
+		BoardForm,
+		BoardArticleForm,
+		ErrorPage
+	},
 	computed: {
 		collection() {
 			return this.$route.params.collection
 		},
 		document() {
 			return this.$route.params.document
+		},
+		action() {
+			return this.$route.params.action
 		}
 	}
 }
