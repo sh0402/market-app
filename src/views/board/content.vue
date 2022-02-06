@@ -1,7 +1,7 @@
 <template>
 	<v-container>
-		<v-card>
-			<v-toolbar>
+		<v-card flat>
+			<v-toolbar flat>
 				<v-toolbar-title v-text="info.title"></v-toolbar-title>
 
 				<v-spacer></v-spacer>
