@@ -1,5 +1,5 @@
 <template>
-	<v-container>
+	<!-- <v-container>
 		<v-card flat>
 			<v-card-title class="px-0">
 				Board title
@@ -18,10 +18,6 @@
 							{{ item.price + '원' }}
 
 							<v-spacer />
-
-							<!-- <v-btn icon small @click="openDialog(item)" class="align-center">
-								<v-icon> mdi-dots-vertical </v-icon>
-							</v-btn> -->
 
 							<v-menu offset-y left>
 								<template v-slot:activator="{ on }">
@@ -92,22 +88,26 @@
 				</v-card-text>
 			</v-card>
 		</v-dialog>
-	</v-container>
+	</v-container> -->
+	<v-card>product index</v-card>
 </template>
 
 <script>
 export default {
 	data() {
 		return {
-			dialog: false,
-			items: [],
-			form: {
+			unsubscribe: null,
+			info: {
+				category: '',
 				title: '',
-				price: '',
 				description: ''
 			},
-			unsubscribe: null,
-			selectedItem: null
+			loading: false
+		}
+	},
+	watch: {
+		document() {
+			this.subscribe()
 		}
 	},
 	created() {
@@ -117,80 +117,76 @@ export default {
 		if (this.unsubscribe) this.unsubscribe()
 	},
 	methods: {
-		subscribe() {
-			this.unsubscribe = this.$firebase
-				.firestore()
-				.collection('boards')
-				.onSnapshot(sn => {
-					if (sn.empty) {
-						this.items = []
-						return
-					}
-					this.items = sn.docs.map(v => {
-						const item = v.data()
-						return {
-							id: v.id,
-							title: item.title,
-							price: item.price,
-							description: item.description
-						}
-					})
-				})
-		},
-		openDialog(item) {
-			this.selectedItem = item
-			this.dialog = true
-
-			if (!item) {
-				this.form.title = ''
-				this.form.price = ''
-				this.form.description = ''
-			} else {
-				this.form.title = item.title
-				this.form.price = item.price
-				this.form.description = item.description
-			}
-		},
-		selectItem(item) {
-			this.selectedItem = item
-
-			this.form.title = item.title
-			this.form.price = item.price
-			this.form.description = item.description
-		},
-		add(item) {
-			this.selectedItem = item
-			this.$firebase.firestore().collection('boards').add(this.form)
-
-			if (!item) {
-				this.form.title = ''
-				this.form.price = ''
-				this.form.description = ''
-			} else {
-				this.form.title = item.title
-				this.form.price = item.price
-				this.form.description = item.description
-			}
-		},
-		async update() {
-			try {
-				this.$firebase
-					.firestore()
-					.collection('boards')
-					.doc(this.selectedItem.id)
-					.update(this.form)
-			} finally {
-				this.form.title = ''
-				this.form.price = ''
-				this.form.description = ''
-
-				this.selectedItem = null
-			}
-			this.dialog = false
-		},
-		remove(item) {
-			this.$firebase.firestore().collection('boards').doc(item.id).delete()
-		}
+		// subscribe() {
+		// 	this.unsubscribe = this.$firebase
+		// 		.firestore()
+		// 		.collection('boards')
+		// 		.onSnapshot(sn => {
+		// 			if (sn.empty) {
+		// 				this.items = []
+		// 				return
+		// 			}
+		// 			this.items = sn.docs.map(v => {
+		// 				const item = v.data()
+		// 				return {
+		// 					id: v.id,
+		// 					title: item.title,
+		// 					price: item.price,
+		// 					description: item.description
+		// 				}
+		// 			})
+		// 		})
+		// },
+		// openDialog(item) {
+		// 	this.selectedItem = item
+		// 	this.dialog = true
+		// 	if (!item) {
+		// 		this.form.title = ''
+		// 		this.form.price = ''
+		// 		this.form.description = ''
+		// 	} else {
+		// 		this.form.title = item.title
+		// 		this.form.price = item.price
+		// 		this.form.description = item.description
+		// 	}
+		// },
+		// selectItem(item) {
+		// 	this.selectedItem = item
+		// 	this.form.title = item.title
+		// 	this.form.price = item.price
+		// 	this.form.description = item.description
+		// },
+		// add(item) {
+		// 	this.selectedItem = item
+		// 	this.$firebase.firestore().collection('boards').add(this.form)
+		// 	if (!item) {
+		// 		this.form.title = ''
+		// 		this.form.price = ''
+		// 		this.form.description = ''
+		// 	} else {
+		// 		this.form.title = item.title
+		// 		this.form.price = item.price
+		// 		this.form.description = item.description
+		// 	}
+		// },
+		// async update() {
+		// 	try {
+		// 		this.$firebase
+		// 			.firestore()
+		// 			.collection('boards')
+		// 			.doc(this.selectedItem.id)
+		// 			.update(this.form)
+		// 	} finally {
+		// 		this.form.title = ''
+		// 		this.form.price = ''
+		// 		this.form.description = ''
+		// 		this.selectedItem = null
+		// 	}
+		// 	this.dialog = false
+		// },
+		// remove(item) {
+		// 	this.$firebase.firestore().collection('boards').doc(item.id).delete()
+		// }
 	}
 }
 </script>

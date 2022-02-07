@@ -21,6 +21,27 @@
 			:action="action"
 		></board-article-form>
 
+		<product-index
+			v-else-if="collection === 'product' && document === 'list'"
+		></product-index>
+
+		<product-content
+			v-else-if="collection === 'product' && !action"
+			:document="document"
+		></product-content>
+
+		<product-form
+			v-else-if="collection === 'product' && action === 'product-write'"
+			:document="document"
+			:action="action"
+		></product-form>
+
+		<product-article-form
+			v-else-if="collection === 'product' && action === 'article-write'"
+			:document="document"
+			:action="action"
+		></product-article-form>
+
 		<error-page v-else></error-page>
 		<!-- 
 		<v-card>
@@ -37,6 +58,10 @@ import BoardIndex from './board/index'
 import BoardContent from './board/content'
 import BoardForm from './board/form'
 import BoardArticleForm from './board/article/form'
+import ProductIndex from './product/index'
+import ProductContent from './product/content'
+import ProductForm from './product/form'
+import ProductArticleForm from './product/article/form'
 import ErrorPage from './error'
 
 export default {
@@ -45,6 +70,10 @@ export default {
 		BoardContent,
 		BoardForm,
 		BoardArticleForm,
+		ProductIndex,
+		ProductContent,
+		ProductForm,
+		ProductArticleForm,
 		ErrorPage
 	},
 	computed: {

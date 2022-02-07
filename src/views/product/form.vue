@@ -1,21 +1,21 @@
 <template>
-	<v-container fluid>
+	<v-container class="px-0">
 		<v-form>
+			<v-toolbar flat dense>
+				<v-toolbar-title>Product</v-toolbar-title>
+
+				<v-spacer />
+
+				<v-btn icon @click="$router.push('/product/' + document)">
+					<v-icon>mdi-arrow-left</v-icon>
+				</v-btn>
+
+				<v-btn icon @click="save">
+					<v-icon>mdi-content-save</v-icon>
+				</v-btn>
+			</v-toolbar>
+
 			<v-card :loading="loading">
-				<v-toolbar color="accent" dense flat dark>
-					<v-toolbar-title>게시판 as 작성</v-toolbar-title>
-
-					<v-spacer />
-
-					<v-btn icon @click="$router.push('/board/' + document)">
-						<v-icon>mdi-arrow-left</v-icon>
-					</v-btn>
-
-					<v-btn icon @click="save">
-						<v-icon>mdi-content-save</v-icon>
-					</v-btn>
-				</v-toolbar>
-
 				<v-card-text>
 					<v-text-field
 						v-model="form.category"
@@ -72,7 +72,7 @@ export default {
 			if (this.unsubscribe) this.unsubsribe()
 			this.ref = this.$firebase
 				.firestore()
-				.collection('boards')
+				.collection('products')
 				.doc(this.document)
 			this.unsubscribe = this.ref.onSnapshot(doc => {
 				this.exists = doc.exists
@@ -100,7 +100,7 @@ export default {
 				} else {
 					this.ref.update(form)
 				}
-				this.$router.push('/board/' + this.document)
+				this.$router.push('/product/' + this.document)
 			} finally {
 				this.loading = false
 			}

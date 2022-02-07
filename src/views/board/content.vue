@@ -1,33 +1,36 @@
 <template>
-	<v-container>
-		<v-card flat>
-			<v-toolbar flat>
-				<v-toolbar-title v-text="info.title"></v-toolbar-title>
+	<v-container class="px-0">
+		<v-toolbar flat dense>
+			<v-toolbar-title>
+				{{ info.title }}
+			</v-toolbar-title>
 
-				<v-spacer></v-spacer>
+			<v-spacer></v-spacer>
 
-				<v-btn icon @click="write">
-					<v-icon>mdi-text-box</v-icon>
-				</v-btn>
+			<v-btn icon @click="write">
+				<v-icon>mdi-dots-vertical</v-icon>
+			</v-btn>
 
-				<v-btn icon @click="articleWrite">
-					<v-icon>mdi-plus-box</v-icon>
-				</v-btn>
-			</v-toolbar>
+			<v-btn color="primary" @click="articleWrite"> write </v-btn>
+		</v-toolbar>
 
-			<v-card-text v-if="info.createdAt">
+		<!-- <v-card-text v-if="info.createdAt">
 				<v-alert outlined>
 					<div style="white-space: pre-line">{{ info.description }}</div>
 					<div>작성일 : {{ info.createdAt.toDate().toLocaleString() }}</div>
 					<div>수정일 : {{ info.updatedAt.toDate().toLocaleString() }}</div>
 				</v-alert>
-			</v-card-text>
-		</v-card>
+			</v-card-text> -->
+
+		<board-article :info="info" :document="document"></board-article>
 	</v-container>
 </template>
 
 <script>
+import BoardArticle from './article/index'
+
 export default {
+	components: { BoardArticle },
 	props: ['document'],
 	data() {
 		return {
@@ -70,7 +73,7 @@ export default {
 		async articleWrite() {
 			this.$router.push({
 				path: this.$route.path + '/article-write',
-				query: { articleId: 'new' }
+				query: { articleId: '' }
 			})
 		}
 	}

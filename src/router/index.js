@@ -10,20 +10,9 @@ const routes = [
 		name: 'Home',
 		component: Home
 	},
-
 	{
 		path: '/auth',
 		component: () => import('@/views/auth')
-	},
-	{
-		path: '/product',
-		name: 'product',
-		component: () => import('@/views/product')
-	},
-	{
-		path: '/product/:article',
-		name: 'product-detail',
-		component: () => import('@/views/product/content')
 	},
 	{
 		path: '/form2',

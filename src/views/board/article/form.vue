@@ -1,39 +1,29 @@
 <template>
 	<v-container fluid>
 		<v-form>
+			<v-toolbar color="accent" dense flat dark>
+				<v-toolbar-title>게시판 as 작성</v-toolbar-title>
+
+				<v-spacer />
+
+				<v-btn icon @click="$router.push('/board/' + document)">
+					<v-icon>mdi-arrow-left</v-icon>
+				</v-btn>
+
+				<v-btn icon @click="save">
+					<v-icon>mdi-content-save</v-icon>
+				</v-btn>
+			</v-toolbar>
+
 			<v-card :loading="loading">
-				<v-toolbar color="accent" dense flat dark>
-					<v-toolbar-title>게시판 글 작성</v-toolbar-title>
-
-					<v-spacer />
-
-					<v-btn icon @click="$router.push('/board/' + document)">
-						<v-icon>mdi-arrow-left</v-icon>
-					</v-btn>
-
-					<v-btn icon @click="save">
-						<v-icon>mdi-content-save</v-icon>
-					</v-btn>
-				</v-toolbar>
-
 				<v-card-text>
-					<v-text-field
-						v-model="form.category"
-						outlined
-						label="종류"
-					></v-text-field>
-
 					<v-text-field
 						v-model="form.title"
 						outlined
 						label="제목"
 					></v-text-field>
 
-					<v-textarea
-						v-model="form.description"
-						outlined
-						label="설명"
-					></v-textarea>
+					<v-textarea v-model="form.content" outlined label="설명"></v-textarea>
 				</v-card-text>
 			</v-card>
 		</v-form>
@@ -46,9 +36,8 @@ export default {
 	data() {
 		return {
 			form: {
-				category: '',
 				title: '',
-				description: ''
+				content: ''
 			},
 			unsubscribe: null,
 			exists: false,
@@ -75,25 +64,54 @@ export default {
 	methods: {
 		subscribe() {
 			console.log(this.articleId)
-			if (this.articleId === 'new') return
-			if (this.unsubscribe) this.unsubsribe()
 			this.ref = this.$firebase
 				.firestore()
 				.collection('boards')
 				.doc(this.document)
+
+			if (!this.articleId) return
+			if (this.unsubscribe) this.unsubsribe()
+			this.unsubscribe = this.ref
 				.collection('articles')
 				.doc(this.articleId)
-			this.unsubscribe = this.ref.onSnapshot(doc => {
-				this.exists = doc.exists
-				if (this.exists) {
-					const item = doc.data()
-					this.form.category = item.category
-					this.form.title = item.title
-					this.form.description = item.description
-				}
-			})
+				.onSnapshot(doc => {
+					this.exists = doc.exists
+					if (this.exists) {
+						const item = doc.data()
+						this.form.title = item.title
+						this.form.content = item.content
+					}
+				})
 		},
 		async save() {
+			this.loading = true
+			try {
+				const createdAt = new Date()
+				const id = createdAt.getTime().toString()
+				const doc = {
+					title: this.form.title,
+					content: this.form.content,
+					updatedAt: createdAt
+				}
+
+				const batch = await this.$firebase.firestore().batch()
+
+				if (!this.articleId) {
+					doc.createdAt = createdAt
+					doc.commentCount = 0
+					batch.set(this.ref.collection('articles').doc(id), doc)
+					batch.update(this.ref, {
+						count: this.$firebase.firestore.FieldValue.increment(1)
+					})
+				} else {
+					batch.update(this.ref.collection('articles').doc(this.articleId), doc)
+				}
+
+				await batch.commit()
+			} finally {
+				this.loading = false
+				this.$router.push('/board/' + this.document)
+			}
 			// const form = {
 			// 	category: this.form.category,
 			// 	title: this.form.title,
