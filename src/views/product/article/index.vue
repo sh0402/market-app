@@ -1,12 +1,12 @@
 <template>
 	<v-container>
 		<v-row dense>
-			<v-col cols="6" v-for="item in 4" :key="item">
+			<v-col cols="6" v-for="item in items" :key="item">
 				<v-card flat>
 					<v-img src="https://picsum.photos/200"></v-img>
 
 					<v-card-title class="d-flex align-center font-weight-bold">
-						item.price + '원'
+						{{ item.price + '원' }}
 
 						<v-spacer />
 
@@ -44,7 +44,42 @@
 <script>
 export default {
 	data() {
-		return {}
+		return {
+			items: [],
+			unsubscribe: null
+		}
+	},
+	created() {
+		this.subscribe()
+	},
+	destroyed() {
+		if (this.unsubscribe) this.unsubscribe()
+	},
+	methods: {
+		subscribe() {
+			if (this.unsubscribe) this.unsubscribe()
+
+			this.unsubscribe = this.$firebase
+				.firestore()
+				.collection('boards')
+				.doc(this.document)
+				.onSnapshot(sn => {
+					if (sn.empty) {
+						this.items = []
+						return
+					}
+
+					console.log('here')
+
+					this.items = sn.docs.map(doc => {
+						const item = doc.data()
+						return {
+							id: doc.id,
+							title: item.title
+						}
+					})
+				})
+		}
 	}
 }
 </script>
