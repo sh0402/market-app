@@ -15,7 +15,7 @@
 		</div>
 
 		<div class="d-flex flex-column align-center">
-			<v-btn depressed large color="transparent" to="/form2">
+			<v-btn depressed large color="transparent" @click="articleWrite">
 				<v-icon> mdi-plus </v-icon>
 			</v-btn>
 			<span class="text-caption">등록</span>
@@ -121,6 +121,12 @@ export default {
 		},
 		close() {
 			this.dialog = false
+		},
+		async articleWrite() {
+			this.$router.push({
+				path: '/product/article-write',
+				query: { ariticleId: '' }
+			})
 		}
 	}
 }

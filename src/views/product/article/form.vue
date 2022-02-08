@@ -1,35 +1,50 @@
 <template>
-	<v-container>
-		<v-card>
-			<v-toolbar class="d-flex text-center justify-center">
+	<v-container class="px-0">
+		<v-card flat>
+			<v-toolbar flat>
+				<v-btn icon @click="$router.push('/product/' + document)">
+					<v-icon>mdi-chevron-left</v-icon>
+				</v-btn>
+
+				<v-spacer></v-spacer>
+
 				<v-toolbar-title> 제품등록 </v-toolbar-title>
+
+				<v-spacer></v-spacer>
+
+				<v-btn icon color="primary" @click="add">등록</v-btn>
 			</v-toolbar>
 
 			<v-card-text>
 				<v-text-field
 					dense
 					outlined
-					label="Product Name"
+					label="상품명"
 					v-model="form.title"
 				></v-text-field>
 
 				<v-text-field
 					dense
 					outlined
-					label="Price"
-					v-model="form.price"
+					label="카테고리"
+					v-model="form.category"
 				></v-text-field>
 
 				<v-text-field
 					dense
 					outlined
-					label="Description"
-					v-model="form.description"
+					label="₩ 가격"
+					v-model="form.price"
 				></v-text-field>
-			</v-card-text>
 
-			<v-card-text>
-				<v-btn @click="add">add</v-btn>
+				<v-textarea
+					dense
+					outlined
+					no-resize
+					height="400"
+					label="등록할 제품의 내용을 작성해주세요."
+					v-model="form.description"
+				></v-textarea>
 			</v-card-text>
 		</v-card>
 	</v-container>

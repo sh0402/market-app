@@ -54,7 +54,7 @@ export default {
 			item.createdAt = new Date()
 
 			try {
-				this.$firebase.firestore().collection('boards').add(item)
+				this.$firebase.firestore().collection('boards').doc('product').add(item)
 			} finally {
 				this.form.title = ''
 				this.form.price = ''

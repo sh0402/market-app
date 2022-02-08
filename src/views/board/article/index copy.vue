@@ -1,20 +1,38 @@
 <template>
-	<v-container>
-		<v-card outlined>
-			<v-data-table
-				:headers="headers"
-				:items="items"
-				:server-items-length="info.count"
-				:options.sync="options"
-				:items-per-page="5"
-				:footer-props="{
-					'items-per-page-options': [5, 10, 20, 30, 50]
-				}"
-				must-sort
-				item-key="id"
-			></v-data-table>
-		</v-card>
-	</v-container>
+	<v-data-table
+		:headers="headers"
+		:items="items"
+		:server-items-length="info.count"
+		:options.sync="options"
+		:items-per-page="5"
+		:footer-props="{
+			'items-per-page-options': [5, 10, 20, 30, 50]
+		}"
+		must-sort
+		item-key="id"
+	></v-data-table>
+
+	<!-- <v-list two-line>
+		<v-list-item-group>
+			<template v-for="(item, i) in items">
+				<v-list-item :key="item.title">
+					<v-list-item-content>
+						<v-list-item-title v-text="item.title"></v-list-item-title>
+
+						<v-list-item-subtitle> {{ item.content }}</v-list-item-subtitle>
+					</v-list-item-content>
+
+					<v-list-item-action>
+						<v-list-item-subtitle
+							v-text="item.createdAt"
+						></v-list-item-subtitle>
+					</v-list-item-action>
+				</v-list-item>
+
+				<v-divider v-if="i < items.length - 1" :key="i"></v-divider>
+			</template>
+		</v-list-item-group>
+	</v-list> -->
 </template>
 
 <script>
@@ -27,7 +45,7 @@ export default {
 			headers: [
 				{ value: 'createdAt', text: '작성일' },
 				{ value: 'title', text: '제목' },
-				{ value: 'content', text: '내용' }
+				{ value: 'content', text: '설명' }
 			],
 			items: [],
 			unsubscribe: null,
@@ -58,7 +76,6 @@ export default {
 				}
 				const arrow = n.page - o.page
 				this.subscribe(arrow)
-				return
 			},
 			deep: true
 		}
