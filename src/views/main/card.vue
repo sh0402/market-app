@@ -1,7 +1,7 @@
 <template>
 	<v-card flat>
 		<v-row dense>
-			<v-col cols="6" v-for="item in 5" :key="item">
+			<v-col cols="6" v-for="item in 4" :key="item">
 				<v-card flat>
 					<v-img src="https://picsum.photos/200"></v-img>
 
@@ -26,20 +26,7 @@
 <script>
 export default {
 	data() {
-		return {
-			items: [],
-			docs: [],
-			unsubscribe: null
-		}
-	},
-	created() {
-		this.subscribe()
-	},
-	destroyed() {
-		if (this.unsubscribe) this.unsubscribe()
-	},
-	methods: {
-		subscribe() {}
+		return {}
 	}
 }
 </script>

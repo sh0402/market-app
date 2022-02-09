@@ -1,7 +1,7 @@
 <template>
 	<v-container>
 		<v-row dense>
-			<v-col cols="6" v-for="item in items" :key="item">
+			<v-col cols="6" v-for="(item, i) in items" :key="i">
 				<v-card flat>
 					<v-img src="https://picsum.photos/200"></v-img>
 
@@ -25,7 +25,7 @@
 					</v-card-title>
 
 					<v-card-subtitle class="pb-0">
-						<span class="text-subtitle-2 grey--text"> item.title </span>
+						<span class="text-subtitle-2 grey--text"> {{ item.title }} </span>
 					</v-card-subtitle>
 
 					<v-card-subtitle class="d-flex justify-space-between align-center">
@@ -43,12 +43,19 @@
 
 <script>
 export default {
+	props: ['info', 'document'],
 	data() {
 		return {
 			items: [],
-			unsubscribe: null
+			unsubscribe: null,
+			docs: []
 		}
 	},
+	// watch: {
+	// 	document() {
+	// 		this.subscribe()
+	// 	}
+	// },
 	created() {
 		this.subscribe()
 	},
@@ -58,25 +65,21 @@ export default {
 	methods: {
 		subscribe() {
 			if (this.unsubscribe) this.unsubscribe()
-
 			this.unsubscribe = this.$firebase
 				.firestore()
 				.collection('boards')
 				.doc(this.document)
+				.collection('articles')
 				.onSnapshot(sn => {
 					if (sn.empty) {
 						this.items = []
 						return
 					}
-
-					console.log('here')
-
+					this.docs = sn.docs
 					this.items = sn.docs.map(doc => {
+						console.log(doc.data())
 						const item = doc.data()
-						return {
-							id: doc.id,
-							title: item.title
-						}
+						return item
 					})
 				})
 		}

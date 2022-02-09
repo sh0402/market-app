@@ -55,6 +55,7 @@ export default {
 	props: ['document', 'action'],
 	data() {
 		return {
+			items: [],
 			form: {
 				title: '',
 				category: '',
@@ -62,8 +63,8 @@ export default {
 				description: ''
 			},
 			unsubscribe: null,
-			exists: false,
 			selectedItem: null,
+			exists: false,
 			ref: null,
 			loading: false
 		}
@@ -79,12 +80,11 @@ export default {
 		}
 	},
 	created() {
-		// this.subscribe()
+		this.subscribe()
 	},
 	destroyed() {
 		if (this.unsubscribe) this.unsubscribe()
 	},
-
 	methods: {
 		subscribe() {
 			console.log(this.articleId)
@@ -92,9 +92,7 @@ export default {
 				.firestore()
 				.collection('boards')
 				.doc(this.document)
-
 			if (!this.articleId) return
-
 			if (this.unsubscribe) this.unsubscribe()
 			this.unsubscribe = this.ref
 				.collection('articles')
@@ -122,10 +120,8 @@ export default {
 					description: this.form.description,
 					updatedAt: createdAt
 				}
-
 				const batch = await this.$firebase.firestore().batch()
-
-				if (!this.articl) {
+				if (!this.articleId) {
 					doc.createdAt = createdAt
 					doc.commentCount = 0
 					batch.set(this.ref.collection('articles').doc(id), doc)
@@ -133,12 +129,12 @@ export default {
 						count: this.$firebase.firestore.FieldValue.increment(1)
 					})
 				} else {
-					batch.update(this.ref.collection('articles').doc(this.articleId), doc)
+					batch.update(this.ref.collection('article').doc(this.articleId), doc)
 				}
 				await batch.commit()
 			} finally {
 				this.loading = false
-				this.$router.push('/board/' + this.document)
+				this.$router.push('/product/' + this.document)
 			}
 		}
 		// async add() {
