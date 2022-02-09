@@ -10,3 +10,7 @@
 
 ### Delete Function
 1. firebase.json > "npm --prefix %RESOURCE_DIR% run lint"
+
+
+
+test
