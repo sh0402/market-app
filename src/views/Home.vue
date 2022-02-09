@@ -13,6 +13,8 @@ import MainTab from '@/views/main/tab'
 
 export default {
 	components: { MainSlide, MainTab },
-	data() {}
+	data() {
+		return {}
+	}
 }
 </script>

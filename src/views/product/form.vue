@@ -72,7 +72,7 @@ export default {
 			if (this.unsubscribe) this.unsubsribe()
 			this.ref = this.$firebase
 				.firestore()
-				.collection('products')
+				.collection('boards')
 				.doc(this.document)
 			this.unsubscribe = this.ref.onSnapshot(doc => {
 				this.exists = doc.exists

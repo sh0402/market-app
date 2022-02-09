@@ -64,7 +64,7 @@ export default {
 		async articleWrite() {
 			this.$router.push({
 				path: this.$route.path + '/article-write',
-				query: { articleId: '' }
+				query: { ariticleId: '' }
 			})
 		}
 	}

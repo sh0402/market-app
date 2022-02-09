@@ -7,11 +7,13 @@
 
 			<v-spacer></v-spacer>
 
-			<v-btn icon @click="write">
-				<v-icon>mdi-dots-vertical</v-icon>
-			</v-btn>
+			<template v-if="user">
+				<v-btn icon @click="write">
+					<v-icon>mdi-dots-vertical</v-icon>
+				</v-btn>
 
-			<v-btn color="primary" @click="articleWrite"> write </v-btn>
+				<v-btn color="primary" @click="articleWrite"> write </v-btn>
+			</template>
 		</v-toolbar>
 
 		<!-- <v-card-text v-if="info.createdAt">
@@ -43,10 +45,14 @@ export default {
 			loading: false
 		}
 	},
-
 	watch: {
 		document() {
 			this.subscribe()
+		}
+	},
+	computed: {
+		user() {
+			return this.$store.state.user
 		}
 	},
 	created() {
@@ -57,6 +63,7 @@ export default {
 	},
 	methods: {
 		subscribe() {
+			console.log('notice-index')
 			if (this.unsubscribe) this.unsubscribe()
 			const ref = this.$firebase
 				.firestore()

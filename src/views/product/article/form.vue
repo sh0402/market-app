@@ -12,7 +12,7 @@
 
 				<v-spacer></v-spacer>
 
-				<v-btn icon color="primary" @click="add">등록</v-btn>
+				<v-btn icon color="primary" @click="save">등록</v-btn>
 			</v-toolbar>
 
 			<v-card-text>
@@ -58,13 +58,25 @@ export default {
 			items: [],
 			form: {
 				title: '',
+				category: '',
 				price: '',
 				description: ''
 			},
 			unsubscribe: null,
 			selectedItem: null,
+			exists: false,
 			ref: null,
 			loading: false
+		}
+	},
+	computed: {
+		articleId() {
+			return this.$route.query.articleId
+		}
+	},
+	watch: {
+		document() {
+			this.subscribe()
 		}
 	},
 	created() {
@@ -73,13 +85,62 @@ export default {
 	destroyed() {
 		if (this.unsubscribe) this.unsubscribe()
 	},
-
 	methods: {
 		subscribe() {
+			console.log(this.articleId)
 			this.ref = this.$firebase
 				.firestore()
 				.collection('boards')
 				.doc(this.document)
+
+			if (!this.articleId) return
+
+			if (this.unsubscribe) this.unsubscribe()
+			this.unsubscribe = this.ref
+				.collection('articles')
+				.doc(this.articleId)
+				.onSnapshot(doc => {
+					this.exists = doc.exists
+					if (this.exists) {
+						const item = doc.data()
+						this.form.title = item.title
+						this.form.category = item.category
+						this.form.price = item.price
+						this.form.description = item.description
+					}
+				})
+		},
+		async save() {
+			this.loading = true
+
+			try {
+				const createdAt = new Date()
+				const id = createdAt.getTime().toString()
+				const doc = {
+					title: this.form.title,
+					category: this.form.category,
+					price: this.form.price,
+					description: this.form.description,
+					updatedAt: createdAt
+				}
+
+				const batch = await this.$firebase.firestore().batch()
+
+				if (!this.articleId) {
+					doc.createdAt = createdAt
+					doc.commentCount = 0
+					batch.set(this.ref.collection('articles').doc(id), doc)
+					batch.update(this.ref, {
+						count: this.$firebase.firestore.FieldValue.increment(1)
+					})
+				} else {
+					batch.update(this.ref.collection('article').doc(this.articleId), doc)
+				}
+				await batch.commit()
+			} finally {
+				this.loading = false
+				this.$router.push('/product/' + this.document)
+			}
 		}
 		// async add() {
 		// 	const item = {}
