@@ -45,13 +45,18 @@
 					label="등록할 제품의 내용을 작성해주세요."
 					v-model="form.description"
 				></v-textarea>
+
+				<editor></editor>
 			</v-card-text>
 		</v-card>
 	</v-container>
 </template>
 
 <script>
+import Editor from '../../editor.vue'
+
 export default {
+	components: { Editor },
 	props: ['document', 'action'],
 	data() {
 		return {
