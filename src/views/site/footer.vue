@@ -124,7 +124,7 @@ export default {
 		},
 		async articleWrite() {
 			this.$router.push({
-				path: '/product/article-write',
+				path: '/product/product/article-write',
 				query: { ariticleId: '' }
 			})
 		}

@@ -13,10 +13,14 @@
     "deploy:st": "firebase deploy --only storage"
   },
   "dependencies": {
+    "@tiptap/starter-kit": "^2.0.0-beta.183",
+    "@tiptap/vue-2": "^2.0.0-beta.77",
     "axios": "^0.25.0",
     "core-js": "^3.6.5",
     "firebase": "^9.6.4",
     "register-service-worker": "^1.7.1",
+    "tiptap": "^1.32.2",
+    "tiptap-extensions": "^1.35.2",
     "vue": "^2.6.11",
     "vue-router": "^3.2.0",
     "vuetify": "^2.4.0",

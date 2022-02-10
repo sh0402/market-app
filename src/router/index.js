@@ -17,7 +17,11 @@ const routes = [
 	{
 		path: '/form2',
 		name: 'form2',
-		component: () => import('@/components/product/form2')
+		component: () => import('@/components/product2222/form2')
+	},
+	{
+		path: '/editor',
+		component: () => import('@/views/editor')
 	},
 	{
 		path: '/:collection/:document',
