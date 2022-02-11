@@ -48,6 +48,9 @@ export default {
 	computed: {
 		articleId() {
 			return this.$route.query.articleId
+		},
+		user() {
+			return this.$store.state.user
 		}
 	},
 	watch: {
@@ -99,6 +102,13 @@ export default {
 				if (!this.articleId) {
 					doc.createdAt = createdAt
 					doc.commentCount = 0
+					doc.readCount = 0
+					doc.uid = this.$store.state.fireUser.uid
+					doc.user = {
+						email: this.user.email,
+						photoURL: this.user.photoURL,
+						displayName: this.user.displayName
+					}
 					batch.set(this.ref.collection('articles').doc(id), doc)
 					batch.update(this.ref, {
 						count: this.$firebase.firestore.FieldValue.increment(1)

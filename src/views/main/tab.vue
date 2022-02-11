@@ -43,6 +43,7 @@ export default {
 			tabs: null,
 			items: ['Recommend', 'Brand']
 		}
-	}
+	},
+	methods: {}
 }
 </script>

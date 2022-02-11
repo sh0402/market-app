@@ -22,6 +22,7 @@
 						<v-icon small>mdi-database-edit</v-icon>
 					</v-btn>
 				</v-list-item-action>
+
 				<v-list-item-action class="mx-0">
 					<v-btn icon @click="removeItem(items, i)">
 						<v-icon small>mdi-close</v-icon>

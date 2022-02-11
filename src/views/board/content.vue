@@ -7,13 +7,11 @@
 
 			<v-spacer></v-spacer>
 
-			<template v-if="user">
-				<v-btn icon @click="write">
-					<v-icon>mdi-dots-vertical</v-icon>
-				</v-btn>
+			<v-btn icon @click="write" v-if="user">
+				<v-icon>mdi-dots-vertical</v-icon>
+			</v-btn>
 
-				<v-btn color="primary" @click="articleWrite"> write </v-btn>
-			</template>
+			<v-btn color="primary" @click="articleWrite"> write </v-btn>
 		</v-toolbar>
 
 		<!-- <v-card-text v-if="info.createdAt">

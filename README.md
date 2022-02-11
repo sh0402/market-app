@@ -11,6 +11,6 @@
 ### Delete Function
 1. firebase.json > "npm --prefix %RESOURCE_DIR% run lint"
 
-
-
-test
+### Date displayed
+1. yarn add moment
+2. create global JS file > plugins diretory

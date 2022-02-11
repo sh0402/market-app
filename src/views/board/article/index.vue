@@ -12,22 +12,35 @@
 				}"
 				must-sort
 				item-key="id"
-			></v-data-table>
+			>
+				<template v-slot:item.createdAt="{ item }">
+					<display-time :time="item.createdAt"></display-time>
+				</template>
+
+				<template v-slot:item.user.displayName="{ item }">
+					<display-user :user="item.user"></display-user>
+				</template>
+			</v-data-table>
 		</v-card>
 	</v-container>
 </template>
 
 <script>
 import { head, last } from 'lodash'
+import DisplayTime from '@/components/display-time'
+import DisplayUser from '@/components/display-user'
 
 export default {
 	props: ['info', 'document'],
+	components: { DisplayTime, DisplayUser },
 	data() {
 		return {
 			headers: [
 				{ value: 'createdAt', text: '작성일' },
 				{ value: 'title', text: '제목' },
-				{ value: 'content', text: '내용' }
+				{ value: 'user.displayName', text: '작성자' },
+				{ value: 'readCount', text: '조회수' },
+				{ value: 'commentCount', text: '댓글' }
 			],
 			items: [],
 			unsubscribe: null,
