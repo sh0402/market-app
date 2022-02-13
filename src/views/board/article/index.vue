@@ -17,10 +17,23 @@
 					<display-time :time="item.createdAt"></display-time>
 				</template>
 
+				<template v-slot:item.title="{ item }">
+					<a @click="openDialog(item)">
+						{{ item.title }}
+					</a>
+				</template>
+
 				<template v-slot:item.user.displayName="{ item }">
 					<display-user :user="item.user"></display-user>
 				</template>
 			</v-data-table>
+
+			<v-dialog v-if="selectedItem" v-model="dialog">
+				<display-content
+					:item="selectedItem"
+					@close="dialog = false"
+				></display-content>
+			</v-dialog>
 		</v-card>
 	</v-container>
 </template>
@@ -29,10 +42,11 @@
 import { head, last } from 'lodash'
 import DisplayTime from '@/components/display-time'
 import DisplayUser from '@/components/display-user'
+import DisplayContent from '@/components/display-content'
 
 export default {
 	props: ['info', 'document'],
-	components: { DisplayTime, DisplayUser },
+	components: { DisplayTime, DisplayUser, DisplayContent },
 	data() {
 		return {
 			headers: [
@@ -48,7 +62,9 @@ export default {
 				sortBy: ['createdAt'],
 				sortDesc: [true]
 			},
-			docs: []
+			docs: [],
+			selectedItem: null,
+			dialog: false
 		}
 	},
 	watch: {
@@ -74,6 +90,11 @@ export default {
 				return
 			},
 			deep: true
+		},
+		dialog(n) {
+			if (!n) {
+				this.selectedItem = null
+			}
 		}
 	},
 	created() {
@@ -125,6 +146,10 @@ export default {
 					return item
 				})
 			})
+		},
+		openDialog(item) {
+			this.selectedItem = item
+			this.dialog = true
 		}
 	}
 }

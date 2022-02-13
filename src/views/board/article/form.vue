@@ -17,13 +17,48 @@
 
 			<v-card :loading="loading">
 				<v-card-text>
+					<v-row dense>
+						<v-col cols="6">
+							<v-card outlined height="150" class="mb-6">
+								<v-img height="100%" :src="imageUrl"></v-img>
+							</v-card>
+						</v-col>
+
+						<v-col cols="6">
+							<v-card
+								dense
+								outlined
+								height="150"
+								class="d-flex justify-center align-center"
+								v-model="imageName"
+								@click="pickFile"
+							>
+								<v-icon> mdi-camera </v-icon>
+							</v-card>
+
+							<input
+								type="file"
+								style="display: none"
+								ref="image"
+								accept="image/*"
+								@change="onFilePicked"
+							/>
+						</v-col>
+					</v-row>
+
 					<v-text-field
+						dense
 						v-model="form.title"
 						outlined
 						label="제목"
 					></v-text-field>
 
-					<v-textarea v-model="form.content" outlined label="설명"></v-textarea>
+					<v-textarea
+						dense
+						v-model="form.content"
+						outlined
+						label="설명"
+					></v-textarea>
 				</v-card-text>
 			</v-card>
 		</v-form>
@@ -37,8 +72,13 @@ export default {
 		return {
 			form: {
 				title: '',
-				content: ''
+				content: '',
+				imageUrl: ''
 			},
+			imageName: '',
+			imageUrl: '',
+			imageFile: '',
+			imgUrls: [],
 			unsubscribe: null,
 			exists: false,
 			ref: null,
@@ -86,6 +126,29 @@ export default {
 					}
 				})
 		},
+		pickFile() {
+			this.$refs.image.click()
+		},
+		onFilePicked(e) {
+			const files = e.target.files
+			if (files[0] !== undefined) {
+				this.imageName = files[0].name
+				if (this.imageName.lastIndexOf('.') <= 0) {
+					return
+				}
+
+				const fr = new FileReader()
+				fr.readAsDataURL(files[0])
+				fr.addEventListener('load', () => {
+					this.imageUrl = fr.result
+					this.imageFile = files[0]
+				})
+			} else {
+				this.imageName = ''
+				this.imageFile = ''
+				this.imageUrl = ''
+			}
+		},
 		async save() {
 			this.loading = true
 			try {
@@ -109,6 +172,7 @@ export default {
 						photoURL: this.user.photoURL,
 						displayName: this.user.displayName
 					}
+					doc.imageUrl = this.form.imageUrl
 					batch.set(this.ref.collection('articles').doc(id), doc)
 					batch.update(this.ref, {
 						count: this.$firebase.firestore.FieldValue.increment(1)
